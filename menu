@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pizza Piero – Menü</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green-dark: #1b4332;
+    --green-mid: #2d6a4f;
+    --green-light: #52b788;
+    --cream: #fdf8f0;
+    --text: #2b2b2b;
+    --text-light: #6b6b6b;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 30px 16px;
+  }
+
+  .menu-container {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(27,67,50,0.12);
+    overflow: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--green-dark);
+    padding: 36px 28px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content:''; position:absolute; top:-60px; left:-60px;
+    width:200px; height:200px; border-radius:50%;
+    background:rgba(82,183,136,0.12);
+  }
+  .header::after {
+    content:''; position:absolute; bottom:-40px; right:-40px;
+    width:160px; height:160px; border-radius:50%;
+    background:rgba(82,183,136,0.08);
+  }
+  .header-icon { font-size:42px; margin-bottom:6px; display:block; }
+  .brand {
+    font-family:'Playfair Display',serif; color:#fff;
+    font-size:38px; font-weight:900; letter-spacing:2px;
+    position:relative; z-index:1;
+  }
+  .brand span { color: var(--green-light); }
+  .phone {
+    margin-top:12px; color:rgba(255,255,255,0.5);
+    font-size:12px; font-weight:300; letter-spacing:1px;
+    position:relative; z-index:1;
+  }
+
+  /* FIYAT BANERI */
+  .price-bar {
+    display:flex; justify-content:center; flex-wrap:wrap;
+    gap:10px; background:var(--green-mid); padding:18px 20px;
+  }
+  .price-tag {
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:10px; padding:8px 14px;
+    text-align:center; min-width:100px;
+  }
+  .price-tag .size {
+    color:rgba(255,255,255,0.7); font-size:10px;
+    font-weight:500; text-transform:uppercase; letter-spacing:1.5px;
+  }
+  .price-tag .price {
+    color:#fff; font-size:18px; font-weight:500; margin-top:2px;
+  }
+  .price-tag .price span {
+    font-size:11px; color:rgba(255,255,255,0.45); font-weight:300;
+  }
+
+  /* TAB NAVIGASYON */
+  .tab-nav {
+    display: flex;
+    background: #f4f4f4;
+    border-bottom: 2px solid #e8e8e8;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 16px 10px;
+    border: none;
+    background: transparent;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    letter-spacing: 0.5px;
+  }
+  .tab-btn:hover {
+    color: var(--green-mid);
+    background: rgba(45,106,79,0.04);
+  }
+  .tab-btn.active {
+    color: var(--green-dark);
+    border-bottom-color: var(--green-light);
+    background: #fff;
+  }
+
+  /* MENU BODY */
+  .menu-body { padding: 24px 24px 32px; }
+
+  /* TAB PANELLER */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION BAŞLIK */
+  .section-title {
+    font-family:'Playfair Display',serif; font-size:20px;
+    font-weight:700; color:var(--green-dark);
+    text-align:center; margin-bottom:4px; letter-spacing:1px;
+  }
+  .section-divider {
+    width:48px; height:3px; background:var(--green-light);
+    margin:0 auto 22px; border-radius:2px;
+  }
+
+  /* ITEM ROW */
+  .menu-item {
+    display:flex; justify-content:space-between;
+    align-items:flex-start; padding:13px 0;
+    border-bottom:1px solid #eee; gap:12px;
+  }
+  .menu-item:last-child { border-bottom:none; }
+
+  .item-info { flex:1; }
+  .item-name {
+    font-family:'Playfair Display',serif; font-size:15px;
+    font-weight:700; color:var(--green-dark); margin-bottom:3px;
+  }
+  .item-desc {
+    font-size:11px; color:var(--text-light);
+    font-weight:300; line-height:1.5;
+  }
+
+  .item-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:var(--green-light); margin-top:7px; flex-shrink:0;
+  }
+
+  .item-price {
+    font-size:13px; font-weight:500;
+    color:var(--green-dark); white-space:nowrap;
+    flex-shrink:0; text-align:right; padding-top:2px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background:var(--green-dark); padding:20px; text-align:center;
+  }
+  .footer-text {
+    color:rgba(255,255,255,0.45); font-size:11px;
+    font-weight:300; letter-spacing:0.5px;
+  }
+  .footer-text strong { color:var(--green-light); font-weight:500; }
+</style>
+</head>
+<body>
+
+<div class="menu-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span class="header-icon">🍕</span>
+    <div class="brand">PIZZA <span>PIERO</span></div>
+    <div class="phone">📞 0531 550 6240</div>
+  </div>
+
+  <!-- FIYAT BANERI -->
+  <div class="price-bar" id="pricBar">
+    <div class="price-tag">
+      <div class="size">Küçük Boy Pizza</div>
+      <div class="price">185 <span>TL</span></div>
+    </div>
+    <div class="price-tag">
+      <div class="size">Orta Boy Pizza</div>
+      <div class="price">285 <span>TL</span></div>
+    </div>
+    <div class="price-tag">
+      <div class="size">Büyük Boy Pizza</div>
+      <div class="price">420 <span>TL</span></div>
+    </div>
+    <div class="price-tag">
+      <div class="size">Sınırsız Pizza</div>
+      <div class="price">385 <span>TL</span></div>
+    </div>
+    <div class="price-tag">
+      <div class="size">Sınırsız Çocuk</div>
+      <div class="price">285 <span>TL</span></div>
+    </div>
+  </div>
+
+  <!-- TAB NAVIGASYON -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('pizza')">🍕 Pizza</button>
+    <button class="tab-btn"        onclick="switchTab('icecek')">🥤 İçecekler</button>
+  </div>
+
+  <!-- MENU BODY -->
+  <div class="menu-body">
+
+    <!-- ===== PIZZA PANEL ===== -->
+    <div class="tab-panel active" id="panel-pizza">
+      <div class="section-title">Pizza Menüsü</div>
+      <div class="section-divider"></div>
+
+      <div class="menu-item"><div class="item-info"><div class="item-name">Mamma Mia Büyük Boy</div><div class="item-desc">Dana Sucuk, Mantar, Domates, Köz Biber, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Mexican</div><div class="item-desc">Sucuk, Soğan, Mantar, Köz Biber, Jalapeno, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Parti Pizza</div><div class="item-desc">Domates Sos, Sosis, Mısır, Kekik, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Sebze Dünyası</div><div class="item-desc">Mantar, Domates, Yeşil Biber, Siyah Zeytin, Mısır, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Tavuk Parçacıklı</div><div class="item-desc">Tavuk Parçaları, Mısır, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Ton Balıklı</div><div class="item-desc">Ton Balığı, Siyah Zeytin, Soğan, Mısır, Domates, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Türk Usulü</div><div class="item-desc">Osmanlı Dana Sucuk, Mantar, Soğan, Yeşil Biber, Domates, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Acılı Tavuk Pizza</div><div class="item-desc">Acı Sos, Tavuk Bonfile, Köz Biber, Jalapeno, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Erciyes Rüzgarı</div><div class="item-desc">Pastırma, Osmanlı Dana Sucuk, Yeşil Biber, Soğan, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Tha Brothers Pepperoni Büyük Boy</div><div class="item-desc">New York Pepperoni, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Döner Special Büyük Boy</div><div class="item-desc">Fırından Çıkmış Mozzerella Peyniri, Et Döner, Pizza Üzerine Parmak Patates Kızartma</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Free Three Büyük Boy</div><div class="item-desc">Seçeceğiniz 3 Malzeme ile...</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Karışık Pizza</div><div class="item-desc">Pizza Sos, Mozzerella Peyniri, Osmanlı Dana Sucuk, Sosis, Mantar, Mısır, Yeşil Biber</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Acılı Pizza</div><div class="item-desc">Acı Sos, Osmanlı Dana Sucuk, Domates, Soğan, Jalapeno Biberi, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Akdeniz Ateşi</div><div class="item-desc">Beyaz Peynir, Mantar, Yeşil Biber, Domates, Siyah Zeytin, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">BBQ Chicken</div><div class="item-desc">Barbeque Sos, Tavuk Parçaları, Mısır, Domates, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Breakfast Pizza</div><div class="item-desc">Beyaz Peynir, Domates, Mozzerella Peyniri, Domates Sos, İsteğe Göre Sosis, Jambon veya Sucuk</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">4 Peynirli Bol Pizza</div><div class="item-desc">Hellim Peyniri, Beyaz Peynir, Cheddar Peyniri, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Brothers Vegi</div><div class="item-desc">İtalyan Köz Biber, Mantar, Mısır, Domates, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Extra Extra</div><div class="item-desc">Sucuk, Jambon, Sosis, Soğan, Yeşil Biber, Mantar, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Extra Sucuk Pizza</div><div class="item-desc">Domates Sos, Osmanlı Dana Sucuk, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Exxxtra Etli</div><div class="item-desc">Osmanlı Dana Sucuk, Jambon, Şerit Sos, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">İtalian</div><div class="item-desc">Osmanlı Dana Sucuk, Mantar, Köz Biber, Kekik, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Margherita</div><div class="item-desc">Sos, Mozzerella Peyniri</div></div><div class="item-dot"></div></div>
+    </div>
+
+    <!-- ===== İÇECEK PANEL ===== -->
+    <div class="tab-panel" id="panel-icecek">
+      <div class="section-title">İçecekler</div>
+      <div class="section-divider"></div>
+
+      <div class="menu-item"><div class="item-info"><div class="item-name">Ayran</div></div><div class="item-price">30 TL</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Bardak İçecek</div></div><div class="item-price">30 TL</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Coca Cola</div><div class="item-desc">330 ML / 1 LT</div></div><div class="item-price">65 / 85 TL</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Fanta</div><div class="item-desc">330 ML / 1 LT</div></div><div class="item-price">65 / 85 TL</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Fuse Tea</div><div class="item-desc">330 ML / 1 LT</div></div><div class="item-price">65 / 85 TL</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Sprite</div><div class="item-desc">330 ML</div></div><div class="item-price">65 TL</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Soda</div><div class="item-desc">Sade / Meyveli</div></div><div class="item-price">30 / 45 TL</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Su</div></div><div class="item-price">20 TL</div></div>
+      <div class="menu-item"><div class="item-info"><div class="item-name">Şalgam</div></div><div class="item-price">50 TL</div></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-text"><strong>Pizza Piero</strong> — Tüm fiyatlar KDV dahildir.<br/>Afiyet olsun! 🍕</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      if (b.getAttribute('onclick').includes(tab)) b.classList.add('active');
+    });
+    // Fiyat baneri sadece Pizza tabında görünsün
+    document.getElementById('pricBar').style.display = (tab === 'pizza') ? 'flex' : 'none';
+  }
+</script>
+
+</body>
+</html>
